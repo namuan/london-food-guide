@@ -160,9 +160,35 @@ body {
     color: var(--color-text-secondary);
     transition: all 0.15s ease;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
 }
+
+.country-flag {
+    width: 24px;
+    height: 16px;
+    display: inline-block;
+    flex: 0 0 auto;
+    border-radius: 4px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.4);
+}
+
+.nav-label {
+    flex: 1;
+    min-width: 0;
+}
+
+.nav-flag {
+    margin-left: auto;
+}
+
+.country-header .country-flag {
+    width: 64px;
+    height: 44px;
+    border-radius: 10px;
+}
+
 
 .nav-item:hover {
     background-color: rgba(0,0,0,0.03);
@@ -233,6 +259,9 @@ body {
     font-weight: 400;
     color: var(--color-text-primary);
     margin-bottom: var(--space-xs);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
 .restaurant-grid {
@@ -358,6 +387,17 @@ body {
     .app-layout {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
+    }
+
+    .country-flag {
+        width: 22px;
+        height: 15px;
+    }
+
+    .country-header .country-flag {
+        width: 46px;
+        height: 32px;
+        border-radius: 8px;
     }
 
     .sidebar {

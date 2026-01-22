@@ -1,53 +1,56 @@
 // Data
 const countries = [
-    { file: 'Australia.md', name: 'Australia' },
-    { file: 'Bangladesh.md', name: 'Bangladesh' },
-    { file: 'Brazil.md', name: 'Brazil' },
-    { file: 'Burma_Myanmar.md', name: 'Burma / Myanmar' },
-    { file: 'Canada.md', name: 'Canada' },
-    { file: 'Colombia.md', name: 'Colombia' },
-    { file: 'Cyprus.md', name: 'Cyprus' },
-    { file: 'Denmark.md', name: 'Denmark' },
-    { file: 'France.md', name: 'France' },
-    { file: 'Georgia.md', name: 'Georgia' },
-    { file: 'Germany_Austria.md', name: 'Germany / Austria' },
-    { file: 'Greece.md', name: 'Greece' },
-    { file: 'Hong_Kong.md', name: 'Hong Kong' },
-    { file: 'Hungary.md', name: 'Hungary' },
-    { file: 'India.md', name: 'India' },
-    { file: 'Indonesia.md', name: 'Indonesia' },
-    { file: 'Iran.md', name: 'Iran' },
-    { file: 'Ireland.md', name: 'Ireland' },
-    { file: 'Israel.md', name: 'Israel' },
-    { file: 'Italy.md', name: 'Italy' },
-    { file: 'Korea.md', name: 'Korea' },
-    { file: 'Lithuania.md', name: 'Lithuania' },
-    { file: 'Malaysia.md', name: 'Malaysia' },
-    { file: 'Mexico.md', name: 'Mexico' },
-    { file: 'Middle_East_Lebanese_Palestinian.md', name: 'Middle East / Lebanese' },
-    { file: 'Netherlands.md', name: 'Netherlands' },
-    { file: 'Nigeria.md', name: 'Nigeria' },
-    { file: 'Pakistan.md', name: 'Pakistan' },
-    { file: 'Peru.md', name: 'Peru' },
-    { file: 'Philippines.md', name: 'Philippines' },
-    { file: 'Poland.md', name: 'Poland' },
-    { file: 'Portugal.md', name: 'Portugal' },
-    { file: 'Puerto_Rico_Dominican.md', name: 'Puerto Rico / Dominican' },
-    { file: 'Russia_Eastern_Europe.md', name: 'Russia / Eastern Europe' },
-    { file: 'Scotland.md', name: 'Scotland' },
-    { file: 'Singapore.md', name: 'Singapore' },
-    { file: 'Slovakia.md', name: 'Slovakia' },
-    { file: 'Somalia.md', name: 'Somalia' },
-    { file: 'South_Africa.md', name: 'South Africa' },
-    { file: 'Spain.md', name: 'Spain' },
-    { file: 'Sri_Lanka.md', name: 'Sri Lanka' },
-    { file: 'Sweden.md', name: 'Sweden' },
-    { file: 'Thailand.md', name: 'Thailand' },
-    { file: 'Turkey.md', name: 'Turkey' },
-    { file: 'Ukraine.md', name: 'Ukraine' },
-    { file: 'USA.md', name: 'USA' },
-    { file: 'Venezuela.md', name: 'Venezuela' },
-    { file: 'Vietnam.md', name: 'Vietnam' }
+    { file: 'Australia.md', name: 'Australia', flag: 'au' },
+    { file: 'Austria.md', name: 'Austria', flag: 'at' },
+    { file: 'Bangladesh.md', name: 'Bangladesh', flag: 'bd' },
+    { file: 'Brazil.md', name: 'Brazil', flag: 'br' },
+    { file: 'Burma_Myanmar.md', name: 'Burma / Myanmar', flag: 'mm' },
+    { file: 'Canada.md', name: 'Canada', flag: 'ca' },
+    { file: 'Colombia.md', name: 'Colombia', flag: 'co' },
+    { file: 'Cyprus.md', name: 'Cyprus', flag: 'cy' },
+    { file: 'Denmark.md', name: 'Denmark', flag: 'dk' },
+    { file: 'France.md', name: 'France', flag: 'fr' },
+    { file: 'Georgia.md', name: 'Georgia', flag: 'ge' },
+    { file: 'Germany.md', name: 'Germany', flag: 'de' },
+    { file: 'Greece.md', name: 'Greece', flag: 'gr' },
+    { file: 'Hong_Kong.md', name: 'Hong Kong', flag: 'hk' },
+    { file: 'Hungary.md', name: 'Hungary', flag: 'hu' },
+    { file: 'India.md', name: 'India', flag: 'in' },
+    { file: 'Indonesia.md', name: 'Indonesia', flag: 'id' },
+    { file: 'Iran.md', name: 'Iran', flag: 'ir' },
+    { file: 'Ireland.md', name: 'Ireland', flag: 'ie' },
+    { file: 'Israel.md', name: 'Israel', flag: 'il' },
+    { file: 'Italy.md', name: 'Italy', flag: 'it' },
+    { file: 'Korea.md', name: 'Korea', flag: 'kr' },
+    { file: 'Kuwait.md', name: 'Kuwait', flag: 'kw' },
+    { file: 'Lebanese.md', name: 'Lebanese', flag: 'lb' },
+    { file: 'Lithuania.md', name: 'Lithuania', flag: 'lt' },
+    { file: 'Malaysia.md', name: 'Malaysia', flag: 'my' },
+    { file: 'Mexico.md', name: 'Mexico', flag: 'mx' },
+    { file: 'Netherlands.md', name: 'Netherlands', flag: 'nl' },
+    { file: 'Nigeria.md', name: 'Nigeria', flag: 'ng' },
+    { file: 'Pakistan.md', name: 'Pakistan', flag: 'pk' },
+    { file: 'Palestine.md', name: 'Palestine', flag: 'ps' },
+    { file: 'Peru.md', name: 'Peru', flag: 'pe' },
+    { file: 'Philippines.md', name: 'Philippines', flag: 'ph' },
+    { file: 'Poland.md', name: 'Poland', flag: 'pl' },
+    { file: 'Portugal.md', name: 'Portugal', flag: 'pt' },
+    { file: 'Puerto_Rico_Dominican.md', name: 'Puerto Rico / Dominican', flag: 'pr' },
+    { file: 'Russia_Eastern_Europe.md', name: 'Russia / Eastern Europe', flag: 'ru' },
+    { file: 'Scotland.md', name: 'Scotland', flag: 'gb-sct' },
+    { file: 'Singapore.md', name: 'Singapore', flag: 'sg' },
+    { file: 'Slovakia.md', name: 'Slovakia', flag: 'sk' },
+    { file: 'Somalia.md', name: 'Somalia', flag: 'so' },
+    { file: 'South_Africa.md', name: 'South Africa', flag: 'za' },
+    { file: 'Spain.md', name: 'Spain', flag: 'es' },
+    { file: 'Sri_Lanka.md', name: 'Sri Lanka', flag: 'lk' },
+    { file: 'Sweden.md', name: 'Sweden', flag: 'se' },
+    { file: 'Thailand.md', name: 'Thailand', flag: 'th' },
+    { file: 'Turkey.md', name: 'Turkey', flag: 'tr' },
+    { file: 'Ukraine.md', name: 'Ukraine', flag: 'ua' },
+    { file: 'USA.md', name: 'USA', flag: 'us' },
+    { file: 'Venezuela.md', name: 'Venezuela', flag: 've' },
+    { file: 'Vietnam.md', name: 'Vietnam', flag: 'vn' }
 ].sort((a, b) => a.name.localeCompare(b.name));
 
 // State
@@ -84,7 +87,22 @@ function renderNav(list) {
     list.forEach(country => {
         const item = document.createElement('div');
         item.className = `nav-item ${activeCountry === country.name ? 'active' : ''}`;
-        item.textContent = country.name;
+
+        const label = document.createElement('span');
+        label.className = 'nav-label';
+        label.textContent = country.name;
+        item.appendChild(label);
+
+        if (country.flag) {
+            const flag = document.createElement('img');
+            flag.className = 'country-flag nav-flag';
+            flag.src = `country-flags/${country.flag}.svg`;
+            flag.alt = '';
+            flag.setAttribute('aria-hidden', 'true');
+            flag.loading = 'lazy';
+            item.appendChild(flag);
+        }
+
         item.onclick = () => loadCountry(country);
         navContainer.appendChild(item);
     });
@@ -114,7 +132,7 @@ async function loadCountry(country) {
         if (!response.ok) throw new Error('Failed to load');
         const markdown = await response.text();
         const parsed = parseMarkdown(markdown);
-        renderContent(country.name, parsed);
+        renderContent(country, parsed);
     } catch (error) {
         contentArea.innerHTML = `
             <div class="empty-state">
@@ -180,10 +198,14 @@ function parseMarkdown(text) {
 }
 
 // Render Main Content
-function renderContent(title, restaurants) {
+function renderContent(country, restaurants) {
+    const headerFlagHtml = country.flag
+        ? `<img class="country-flag" src="country-flags/${country.flag}.svg" alt="" aria-hidden="true" loading="lazy">`
+        : '';
+
     let html = `
         <div class="country-header">
-            <h2>${title}</h2>
+            <h2>${headerFlagHtml}${country.name}</h2>
             <p>${restaurants.length} place${restaurants.length === 1 ? '' : 's'} found</p>
         </div>
         <div class="restaurant-grid">

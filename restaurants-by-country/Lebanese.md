@@ -1,22 +1,10 @@
-# Palestinian / Lebanese / Middle Eastern Restaurants in London
-
-## ShakeShuka
-**Location:** Not specified
-
-**Comments:**
-- "My favourite Palestinian place is ShakeShuka."
+# Lebanese Restaurants in London
 
 ## Ta'mini
 **Location:** Not specified
 
 **Comments:**
 - "Also really like Ta'mini for Lebanese and levantine pastries."
-
-## T by Tamara
-**Location:** Not specified
-
-**Comments:**
-- "T by Tamara has a really cute vibe and is a good all around spot for coffee."
 
 ## Baba Ghanouj
 **Location:** Near Natural History Museum
@@ -37,9 +25,3 @@
 
 **Comments:**
 - "or for a more casual option Oven district in Chiswick. They both have manakeesh/manaeesh, a thin dough freshly made with toppings like za'atar, cheese, lamb, etc."
-
-## Freej Swaileh Kuwaiti Food Restaurant
-**Location:** Not specified
-
-**Comments:**
-- "Freej Swaileh Kuwaiti Food Restaurant"
