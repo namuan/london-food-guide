@@ -102,10 +102,10 @@ body {
 }
 
 .search-icon {
+    display: block;
     position: absolute;
     left: calc(var(--space-xl) + 0.75rem);
-    top: 50%; /* Center vertically in container, not input */
-    transform: translateY(-90%); /* Minor adjustment */
+    top: 1.01rem;
     color: var(--color-text-secondary);
     pointer-events: none;
     opacity: 0.6;
