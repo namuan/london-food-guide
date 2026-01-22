@@ -189,13 +189,21 @@ body {
 }
 
 .country-flag {
-    width: 24px;
-    height: 16px;
+    width: 28px;
+    height: 20px;
     display: inline-block;
     flex: 0 0 auto;
-    border-radius: 4px;
-    object-fit: contain;
-    background: rgba(255,255,255,0.4);
+    border-radius: 3px;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    box-shadow: 
+        inset 0 0 0 1px rgba(0,0,0,0.06), /* Inner definition */
+        0 1px 2px rgba(0,0,0,0.06);       /* Subtle lift */
+    transition: transform 0.2s ease;
+}
+
+.nav-item:hover .country-flag {
+    transform: scale(1.05); /* Gentle interaction feedback */
 }
 
 .nav-label {
