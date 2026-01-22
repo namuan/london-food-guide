@@ -75,36 +75,8 @@ function init() {
 
     // Random country button listener
     const randomBtn = document.getElementById('random-country-btn');
-    randomBtn.addEventListener('click', async () => {
-        const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-        
-        // Load the country first
-        await loadCountry(randomCountry);
-        
-        // Wait a moment for content to render, then select random restaurant
-        setTimeout(() => {
-            const restaurantCards = document.querySelectorAll('.restaurant-card');
-            if (restaurantCards.length > 0) {
-                // Remove any existing highlights/dimming
-                document.querySelectorAll('.restaurant-card.lucky-highlight, .restaurant-card.lucky-dimmed').forEach(card => {
-                    card.classList.remove('lucky-highlight', 'lucky-dimmed');
-                });
-                
-                // Select random restaurant
-                const randomCard = restaurantCards[Math.floor(Math.random() * restaurantCards.length)];
-                randomCard.classList.add('lucky-highlight');
-                
-                // Dim all other restaurants
-                restaurantCards.forEach(card => {
-                    if (card !== randomCard) {
-                        card.classList.add('lucky-dimmed');
-                    }
-                });
-                
-                // Scroll to the highlighted restaurant
-                randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 500);
+    randomBtn.addEventListener('click', () => {
+        startLuckyExperience();
     });
 
     // Check for hash in URL to deep link
@@ -113,6 +85,111 @@ function init() {
         const country = countries.find(c => encodeURI(c.name) === hash);
         if (country) loadCountry(country);
     }
+}
+
+// Lucky Experience Animation
+function startLuckyExperience() {
+    // 1. Pick Winner
+    const winner = countries[Math.floor(Math.random() * countries.length)];
+    
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+        // Skip animation, just load
+        finishLuckyExperience(winner);
+        return;
+    }
+
+    // 2. Clear content and show overlay
+    contentArea.innerHTML = '';
+    const overlay = document.createElement('div');
+    overlay.className = 'lucky-shuffle-container';
+    overlay.innerHTML = `
+        <div class="lucky-shuffle-label">Exploring Tastes...</div>
+        <div class="lucky-shuffle-item" id="lucky-display">
+            <!-- Dynamic content -->
+        </div>
+    `;
+    contentArea.appendChild(overlay);
+    
+    // 3. Define sequence (delays in ms) - logarithmic deceleration
+    const sequence = [
+        40, 40, 40, 40, 40, 40, 
+        50, 50, 60, 60, 70, 80, 
+        100, 120, 150, 200, 280, 
+        400, 600
+    ];
+    
+    let step = 0;
+    
+    const nextStep = () => {
+        if (step >= sequence.length) {
+            // FINISHED: Show Winner permanently
+            showLuckyItem(winner);
+            
+            // Add a "success" effect to the winner text
+            const display = document.getElementById('lucky-display');
+            if (display) {
+                display.style.transform = 'scale(1.1)';
+                display.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+            }
+
+            // Wait then load content
+            setTimeout(() => {
+               finishLuckyExperience(winner); 
+            }, 800);
+            return;
+        }
+        
+        // Show random decoy (ensure it's not the same as previous if possible, but random is fine)
+        const decoy = countries[Math.floor(Math.random() * countries.length)];
+        showLuckyItem(decoy);
+        
+        // Schedule next
+        setTimeout(nextStep, sequence[step]);
+        step++;
+    }
+    
+    // Start sequence
+    nextStep();
+}
+
+function showLuckyItem(country) {
+    const el = document.getElementById('lucky-display');
+    if (!el) return;
+    
+    el.innerHTML = `
+        ${country.flag ? `<img src="country-flags/${country.flag}.svg" class="lucky-shuffle-flag" alt="">` : ''}
+        <span>${country.name}</span>
+    `;
+}
+
+async function finishLuckyExperience(country) {
+    // Load the actual content
+    await loadCountry(country);
+    
+    // Wait a moment for DOM to settle (loadCountry renders synchronously but we want a slight beat)
+    setTimeout(() => {
+        const restaurantCards = document.querySelectorAll('.restaurant-card');
+        if (restaurantCards.length > 0) {
+            // Select random restaurant
+            const randomCard = restaurantCards[Math.floor(Math.random() * restaurantCards.length)];
+            
+            // Apply Highlight
+            randomCard.classList.add('lucky-highlight');
+            
+            // Dim all other restaurants
+            restaurantCards.forEach(card => {
+                if (card !== randomCard) {
+                    card.classList.add('lucky-dimmed');
+                }
+            });
+            
+            // Scroll to the highlighted restaurant smoothly
+            randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 100);
 }
 
 // Render Navigation
