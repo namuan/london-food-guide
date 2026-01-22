@@ -2,6 +2,8 @@
 
 A lightweight, static web app for browsing a curated list of London restaurants by country.
 
+![](docs/intro.png)
+
 - Live site: https://namuan.github.io/london-food-guide/
 
 ## Data source / attribution
