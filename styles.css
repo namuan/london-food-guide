@@ -106,10 +106,34 @@ body {
     display: block;
     position: absolute;
     left: calc(var(--space-xl) + 0.75rem);
-    top: 1.01rem;
+    top: calc(3.25rem + 0.75rem);
     color: var(--color-text-secondary);
     pointer-events: none;
     opacity: 0.6;
+}
+
+.random-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: var(--space-sm);
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+}
+
+.random-btn:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+}
+
+.random-btn:active {
+    transform: translateY(0);
 }
 
 .country-nav {

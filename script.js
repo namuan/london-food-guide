@@ -73,6 +73,13 @@ function init() {
         renderNav(filtered);
     });
 
+    // Random country button listener
+    const randomBtn = document.getElementById('random-country-btn');
+    randomBtn.addEventListener('click', () => {
+        const randomCountry = countries[Math.floor(Math.random() * countries.length)];
+        loadCountry(randomCountry);
+    });
+
     // Check for hash in URL to deep link
     const hash = window.location.hash.slice(1); // remove #
     if (hash) {
