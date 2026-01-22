@@ -75,9 +75,36 @@ function init() {
 
     // Random country button listener
     const randomBtn = document.getElementById('random-country-btn');
-    randomBtn.addEventListener('click', () => {
+    randomBtn.addEventListener('click', async () => {
         const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-        loadCountry(randomCountry);
+        
+        // Load the country first
+        await loadCountry(randomCountry);
+        
+        // Wait a moment for content to render, then select random restaurant
+        setTimeout(() => {
+            const restaurantCards = document.querySelectorAll('.restaurant-card');
+            if (restaurantCards.length > 0) {
+                // Remove any existing highlights/dimming
+                document.querySelectorAll('.restaurant-card.lucky-highlight, .restaurant-card.lucky-dimmed').forEach(card => {
+                    card.classList.remove('lucky-highlight', 'lucky-dimmed');
+                });
+                
+                // Select random restaurant
+                const randomCard = restaurantCards[Math.floor(Math.random() * restaurantCards.length)];
+                randomCard.classList.add('lucky-highlight');
+                
+                // Dim all other restaurants
+                restaurantCards.forEach(card => {
+                    if (card !== randomCard) {
+                        card.classList.add('lucky-dimmed');
+                    }
+                });
+                
+                // Scroll to the highlighted restaurant
+                randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 500);
     });
 
     // Check for hash in URL to deep link

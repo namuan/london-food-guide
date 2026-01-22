@@ -312,6 +312,37 @@ body {
     border-color: var(--color-accent);
 }
 
+.restaurant-card.lucky-highlight {
+    border-color: var(--color-accent);
+    border-width: 2px;
+    box-shadow: 0 0 0 4px rgba(44, 95, 45, 0.1), 0 16px 32px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+    animation: luckyPulse 2s ease-in-out;
+    opacity: 1;
+    filter: brightness(1);
+}
+
+.restaurant-card.lucky-dimmed {
+    opacity: 0.4;
+    filter: brightness(0.7);
+    transition: all 0.3s ease;
+}
+
+.restaurant-card.lucky-dimmed:hover {
+    opacity: 0.6;
+    filter: brightness(0.8);
+    transform: translateY(-2px);
+}
+
+@keyframes luckyPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 4px rgba(44, 95, 45, 0.1), 0 16px 32px rgba(0,0,0,0.08);
+    }
+    50% { 
+        box-shadow: 0 0 0 8px rgba(44, 95, 45, 0.2), 0 20px 40px rgba(0,0,0,0.12);
+    }
+}
+
 .restaurant-title {
     display: flex;
     align-items: baseline;
