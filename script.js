@@ -61,6 +61,9 @@ let activeCountry = null;
 const navContainer = document.getElementById('country-nav');
 const contentArea = document.getElementById('content-area');
 const searchInput = document.getElementById('search-input');
+const menuToggle = document.getElementById('menu-toggle');
+const menuOverlay = document.getElementById('menu-overlay');
+const sidebar = document.querySelector('.sidebar');
 
 // Initialize
 function init() {
@@ -77,13 +80,32 @@ function init() {
     const randomBtn = document.getElementById('random-country-btn');
     randomBtn.addEventListener('click', () => {
         startLuckyExperience();
+        // Close mobile menu if open
+        closeMobileMenu();
     });
+
+    // Mobile Menu Logic
+    if (menuToggle && menuOverlay && sidebar) {
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            menuOverlay.classList.add('active');
+        });
+
+        menuOverlay.addEventListener('click', closeMobileMenu);
+    }
 
     // Check for hash in URL to deep link
     const hash = window.location.hash.slice(1); // remove #
     if (hash) {
         const country = countries.find(c => encodeURI(c.name) === hash);
         if (country) loadCountry(country);
+    }
+}
+
+function closeMobileMenu() {
+    if (sidebar && menuOverlay) {
+        sidebar.classList.remove('open');
+        menuOverlay.classList.remove('active');
     }
 }
 
@@ -222,6 +244,14 @@ function renderNav(list) {
 // Load Content
 async function loadCountry(country) {
     activeCountry = country.name;
+    // Close mobile menu if open
+    closeMobileMenu();
+
+    // Reset scroll (both container for desktop and window for mobile)
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) mainContent.scrollTop = 0;
+    window.scrollTo(0, 0);
+
     // Update active state in nav without re-rendering everything (preserves filter)
     document.querySelectorAll('.nav-item').forEach(el => {
         el.classList.toggle('active', el.textContent === country.name);
