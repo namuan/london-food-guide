@@ -515,6 +515,8 @@ body {
     .app-layout {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
+        height: 100vh;
+        overflow: hidden;
     }
 
     .country-flag {
@@ -530,18 +532,20 @@ body {
 
     .sidebar {
         height: auto;
-        max-height: 25vh;
+        max-height: none;
         border-right: none;
         border-bottom: 1px solid var(--color-border);
-        padding: var(--space-md) 0;
+        padding: var(--space-md) 0 0 0;
+        position: relative;
+        z-index: 10;
+        overflow: visible;
     }
 
     .brand {
-        padding: 0 var(--space-md);
+        padding: 0 var(--space-md) var(--space-sm);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: var(--space-md);
     }
     
     .brand h1 {
@@ -549,33 +553,85 @@ body {
         margin: 0;
     }
     
-    .search-container {
-        padding: 0 var(--space-md);
-    }
-
-    .country-nav {
-        display: none; /* Hide standard nav on mobile, use Search or horizontal scroll maybe? */
+    .brand .subtitle {
+        display: none;
     }
     
-    /* Better mobile nav approach: Horizontal scroll pills */
+    .search-container {
+        padding: 0 var(--space-md) var(--space-sm);
+    }
+
+    .search-icon {
+        top: calc(0.75rem + 0.75rem);
+    }
+    
+    /* Horizontal scroll navigation for mobile */
     .country-nav {
         display: flex;
         flex-direction: row;
         overflow-x: auto;
+        overflow-y: hidden;
         padding: var(--space-sm) var(--space-md);
         white-space: nowrap;
         gap: var(--space-sm);
         height: auto;
         border-top: 1px solid var(--color-border);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+    
+    .country-nav::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
     }
     
     .nav-item {
         background: white;
         border: 1px solid var(--color-border);
         padding: 0.5rem 1rem;
+        flex-shrink: 0;
+        border-radius: 20px;
+        font-size: 0.875rem;
     }
     
     .nav-item.active {
         border-color: var(--color-accent);
+        background-color: var(--color-accent);
+        color: white;
+    }
+    
+    .nav-item:hover {
+        background-color: rgba(0,0,0,0.05);
+    }
+    
+    .nav-item.active:hover {
+        background-color: var(--color-accent-hover);
+    }
+
+    .main-content {
+        height: 100%;
+        overflow-y: auto;
+        padding: var(--space-md);
+        position: relative;
+        z-index: 1;
+    }
+    
+    .restaurant-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .country-header h2 {
+        font-size: 2rem;
+    }
+    
+    .restaurant-name {
+        font-size: 1.25rem;
+    }
+    
+    .empty-state h2 {
+        font-size: 1.5rem;
+    }
+    
+    .lucky-shuffle-item {
+        font-size: 2.5rem;
     }
 }
