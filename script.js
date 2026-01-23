@@ -68,7 +68,7 @@ const sidebar = document.querySelector('.sidebar');
 // Initialize
 function init() {
     renderNav(countries);
-    
+
     // Search listener
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
@@ -121,19 +121,37 @@ function closeMobileMenu() {
     }
 }
 
+function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function setButtonsBusy(isBusy) {
+    const btns = [
+        document.getElementById('random-country-btn'),
+        document.getElementById('random-country-btn-mobile')
+    ].filter(Boolean);
+
+    btns.forEach(btn => {
+        btn.classList.toggle('is-busy', isBusy);
+        btn.toggleAttribute('aria-busy', isBusy);
+    });
+}
+
 // Lucky Experience Animation
 function startLuckyExperience() {
     // 1. Pick Winner
     const winner = countries[Math.floor(Math.random() * countries.length)];
-    
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (prefersReducedMotion) {
+    // Avoid stacking lucky flows.
+    setButtonsBusy(true);
+
+    if (prefersReducedMotion()) {
         // Skip animation, just load
         finishLuckyExperience(winner);
         return;
     }
+
+    // Safety: if anything throws below, re-enable.
 
     // 2. Clear content and show overlay
     contentArea.innerHTML = '';
@@ -141,11 +159,14 @@ function startLuckyExperience() {
     overlay.className = 'lucky-shuffle-container';
     overlay.innerHTML = `
         <div class="lucky-shuffle-label">Exploring Tastes...</div>
-        <div class="lucky-shuffle-item" id="lucky-display">
+        <div class="lucky-shuffle-item" id="lucky-display" aria-live="polite">
             <!-- Dynamic content -->
         </div>
     `;
     contentArea.appendChild(overlay);
+
+    // Let the background glow ease in.
+    requestAnimationFrame(() => overlay.classList.add('is-ready'));
     
     // 3. Define sequence (delays in ms) - logarithmic deceleration
     const sequence = [
@@ -160,26 +181,19 @@ function startLuckyExperience() {
     const nextStep = () => {
         if (step >= sequence.length) {
             // FINISHED: Show Winner permanently
-            showLuckyItem(winner);
-            
-            // Add a "success" effect to the winner text
-            const display = document.getElementById('lucky-display');
-            if (display) {
-                display.style.transform = 'scale(1.1)';
-                display.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-            }
+            showLuckyItem(winner, { isWinner: true });
 
             // Wait then load content
             setTimeout(() => {
-               finishLuckyExperience(winner); 
-            }, 800);
+                finishLuckyExperience(winner);
+            }, 650);
             return;
         }
-        
-        // Show random decoy (ensure it's not the same as previous if possible, but random is fine)
+
+        // Show random decoy
         const decoy = countries[Math.floor(Math.random() * countries.length)];
-        showLuckyItem(decoy);
-        
+        showLuckyItem(decoy, { isTicking: true });
+
         // Schedule next
         setTimeout(nextStep, sequence[step]);
         step++;
@@ -189,12 +203,15 @@ function startLuckyExperience() {
     nextStep();
 }
 
-function showLuckyItem(country) {
+function showLuckyItem(country, { isTicking = false, isWinner = false } = {}) {
     const el = document.getElementById('lucky-display');
     if (!el) return;
-    
+
+    el.classList.toggle('is-ticking', isTicking);
+    el.classList.toggle('is-winner', isWinner);
+
     el.innerHTML = `
-        ${country.flag ? `<img src="country-flags/${country.flag}.svg" class="lucky-shuffle-flag" alt="">` : ''}
+        ${country.flag ? `<img src="country-flags/${country.flag}.svg" class="lucky-shuffle-flag" alt="" aria-hidden="true">` : ''}
         <span>${country.name}</span>
     `;
 }
@@ -202,28 +219,36 @@ function showLuckyItem(country) {
 async function finishLuckyExperience(country) {
     // Load the actual content
     await loadCountry(country);
-    
+
     // Wait a moment for DOM to settle (loadCountry renders synchronously but we want a slight beat)
     setTimeout(() => {
         const restaurantCards = document.querySelectorAll('.restaurant-card');
         if (restaurantCards.length > 0) {
             // Select random restaurant
             const randomCard = restaurantCards[Math.floor(Math.random() * restaurantCards.length)];
-            
+
             // Apply Highlight
             randomCard.classList.add('lucky-highlight');
-            
+
+            // One-shot "settle" ring (no looping).
+            if (!prefersReducedMotion()) {
+                randomCard.classList.add('ring-settle');
+                setTimeout(() => randomCard.classList.remove('ring-settle'), 650);
+            }
+
             // Dim all other restaurants
             restaurantCards.forEach(card => {
                 if (card !== randomCard) {
                     card.classList.add('lucky-dimmed');
                 }
             });
-            
-            // Scroll to the highlighted restaurant smoothly
-            randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Scroll to the highlighted restaurant
+            randomCard.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
         }
-    }, 100);
+
+        setButtonsBusy(false);
+    }, 120);
 }
 
 // Render Navigation
@@ -351,6 +376,20 @@ function parseMarkdown(text) {
 }
 
 // Render Main Content
+function animateCardEntrances() {
+    if (prefersReducedMotion()) return;
+
+    const cards = Array.from(document.querySelectorAll('.restaurant-card'));
+    cards.forEach((card, index) => {
+        card.classList.add('is-entering');
+        // Small, calm stagger; keep it cheap on mobile.
+        setTimeout(() => {
+            card.classList.add('is-entered');
+            card.classList.remove('is-entering');
+        }, 40 + index * 18);
+    });
+}
+
 function renderContent(country, restaurants) {
     const headerFlagHtml = country.flag
         ? `<img class="country-flag" src="country-flags/${country.flag}.svg" alt="" aria-hidden="true" loading="lazy">`
@@ -403,6 +442,8 @@ function renderContent(country, restaurants) {
 
     html += `</div>`;
     contentArea.innerHTML = html;
+
+    animateCardEntrances();
 }
 
 // Start

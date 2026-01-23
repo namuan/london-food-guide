@@ -8,7 +8,7 @@
     --color-accent-hover: #1E421F;
     --color-border: #D8D4CC;
     --color-card-bg: #FFFFFF;
-    
+
     /* Typography */
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
@@ -19,9 +19,26 @@
     --space-md: 1rem;
     --space-lg: 1.5rem;
     --space-xl: 2.5rem;
-    
-    /* Transitions */
-    --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+    /* Motion (calm/refined) */
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-press: 110ms;
+    --dur-fast: 160ms;
+    --dur-med: 240ms;
+    --dur-slow: 360ms;
+
+    /* Back-compat */
+    --ease-out: var(--ease-out-quart);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 * {
@@ -115,16 +132,27 @@ body {
     font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s var(--ease-out);
+    transition:
+        transform var(--dur-fast) var(--ease-out-quart),
+        background-color var(--dur-fast) var(--ease-out-quart),
+        box-shadow var(--dur-med) var(--ease-out-quart);
+    transform: translateZ(0);
 }
 
 .random-btn:hover {
     background: var(--color-accent-hover);
     transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.08);
 }
 
 .random-btn:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.99);
+    transition-duration: var(--dur-press);
+}
+
+.random-btn.is-busy {
+    pointer-events: none;
+    opacity: 0.92;
 }
 
 /* Mobile visible button */
@@ -313,10 +341,26 @@ body {
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: var(--space-lg);
-    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+    transition:
+        transform var(--dur-med) var(--ease-out-quart),
+        box-shadow var(--dur-med) var(--ease-out-quart),
+        border-color var(--dur-fast) var(--ease-out-quart),
+        opacity var(--dur-med) var(--ease-out-quart),
+        filter var(--dur-med) var(--ease-out-quart);
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
+}
+
+.restaurant-card.is-entering {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.restaurant-card.is-entered {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .restaurant-card:hover {
@@ -424,6 +468,27 @@ body {
     overflow: hidden;
 }
 
+.lucky-shuffle-container::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(closest-side, rgba(44, 95, 45, 0.12), rgba(44, 95, 45, 0) 68%),
+      radial-gradient(closest-side, rgba(44, 95, 45, 0.08), rgba(44, 95, 45, 0) 70%);
+    filter: blur(2px);
+    opacity: 0;
+    transform: scale(0.98);
+    transition:
+      opacity var(--dur-slow) var(--ease-out-quart),
+      transform var(--dur-slow) var(--ease-out-quart);
+    pointer-events: none;
+}
+
+.lucky-shuffle-container.is-ready::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
 .lucky-shuffle-label {
     font-family: var(--font-body);
     font-size: 0.875rem;
@@ -445,6 +510,21 @@ body {
     text-align: center;
     /* Optimizations */
     will-change: transform, opacity, filter;
+    transform: translateZ(0);
+    transition:
+        transform var(--dur-med) var(--ease-out-expo),
+        opacity var(--dur-fast) var(--ease-out-quart),
+        filter var(--dur-med) var(--ease-out-quart);
+}
+
+.lucky-shuffle-item.is-ticking {
+    transform: translateY(-1px);
+    filter: saturate(1.02);
+}
+
+.lucky-shuffle-item.is-winner {
+    transform: translateY(0) scale(1.03);
+    filter: saturate(1.06);
 }
 
 .lucky-shuffle-flag {
@@ -465,7 +545,33 @@ body {
     opacity: 1;
     filter: brightness(1);
     z-index: 2; /* Lift above dimmed siblings */
-    transition: all 0.6s var(--ease-out); /* Smooth transition instead of keyframe pulse */
+    transition:
+        transform var(--dur-slow) var(--ease-out-expo),
+        box-shadow var(--dur-slow) var(--ease-out-quart),
+        border-color var(--dur-med) var(--ease-out-quart),
+        opacity var(--dur-med) var(--ease-out-quart),
+        filter var(--dur-med) var(--ease-out-quart);
+}
+
+.restaurant-card.lucky-highlight::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 16px;
+    border: 1px solid rgba(44, 95, 45, 0.22);
+    opacity: 0;
+    transform: scale(0.985);
+    pointer-events: none;
+}
+
+.restaurant-card.lucky-highlight.ring-settle::after {
+    animation: ringSettle 520ms var(--ease-out-expo) both;
+}
+
+@keyframes ringSettle {
+    0% { opacity: 0; transform: scale(0.985); }
+    55% { opacity: 1; transform: scale(1.01); }
+    100% { opacity: 0.75; transform: scale(1); }
 }
 
 .restaurant-card.lucky-highlight::before {
