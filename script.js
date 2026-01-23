@@ -76,13 +76,25 @@ function init() {
         renderNav(filtered);
     });
 
-    // Random country button listener
+    // Random country button listener (desktop)
     const randomBtn = document.getElementById('random-country-btn');
-    randomBtn.addEventListener('click', () => {
-        startLuckyExperience();
-        // Close mobile menu if open
-        closeMobileMenu();
-    });
+    if (randomBtn) {
+        randomBtn.addEventListener('click', () => {
+            startLuckyExperience();
+            // Close mobile menu if open
+            closeMobileMenu();
+        });
+    }
+
+    // Random country button listener (mobile)
+    const randomBtnMobile = document.getElementById('random-country-btn-mobile');
+    if (randomBtnMobile) {
+        randomBtnMobile.addEventListener('click', () => {
+            startLuckyExperience();
+            // Close mobile menu if open
+            closeMobileMenu();
+        });
+    }
 
     // Mobile Menu Logic
     if (menuToggle && menuOverlay && sidebar) {

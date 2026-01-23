@@ -85,7 +85,7 @@ body {
 
 #search-input {
     width: 100%;
-    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    padding: 0.75rem 1rem;
     background: rgba(255,255,255,0.6);
     border: 1px solid var(--color-border);
     border-radius: 8px;
@@ -102,15 +102,6 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.search-icon {
-    display: block;
-    position: absolute;
-    left: calc(var(--space-xl) + 0.75rem);
-    top: calc(3.25rem + 0.75rem);
-    color: var(--color-text-secondary);
-    pointer-events: none;
-    opacity: 0.6;
-}
 
 .random-btn {
     width: 100%;
@@ -134,6 +125,20 @@ body {
 
 .random-btn:active {
     transform: translateY(0);
+}
+
+/* Mobile visible button */
+.random-btn.mobile-visible {
+    display: none;
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    min-width: 100px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    margin: 0;
 }
 
 .country-nav {
@@ -524,6 +529,7 @@ body {
     right: 0;
     z-index: 50;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    min-height: 60px;
 }
 
 .menu-toggle {
@@ -653,12 +659,22 @@ body {
     .restaurant-name {
         font-size: 1.35rem;
     }
-    
+
     .empty-state h2 {
         font-size: 1.5rem;
     }
-    
+
     .lucky-shuffle-item {
         font-size: 2.5rem;
+    }
+
+    /* Show the mobile visible button */
+    .random-btn.mobile-visible {
+        display: block;
+    }
+
+    /* Hide the desktop version of the button on mobile */
+    .random-btn:not(.mobile-visible) {
+        display: none;
     }
 }

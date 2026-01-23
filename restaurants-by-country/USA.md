@@ -39,12 +39,6 @@
 - "I'm from Texas, D Grande in Chiswick has great Tex Mex and Texas Joes near London Bridge has very authentic Texas BBQ"
 - "I'm also from Texas (Dallas) and tried d grande, I will try Texas joes eventually."
 
-## Black Cactus
-**Location:** Inside Burnt Faith brandy distillery, near Blackhorse Rd station
-
-**Comments:**
-- "For BBQ - Black Cactus (inside Burnt Faith brandy distillery) near Blackhorse Rd station is amazing. Worried it'll shut and they'll move on somewhere bigger in the not too distant future, they've been closed for a while because the team were flown to the US for a residency and have been ranked best BBQ outside of the US."
-
 ## Buffalo American Grill & TexMex
 **Location:** Greenwich
 
